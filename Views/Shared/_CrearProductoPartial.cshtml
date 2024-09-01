@@ -1,0 +1,53 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<div>
+
+    <form id="createProductoForm">
+        <div class="form-group">
+            <label for="nombre">nombre:</label>
+            <input type="text" id="nombreReg" name="nombreReg" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="precio">Precio:</label>
+            <input type="number" id="precioReg" name="precioReg" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="fechaVencimiento">Fecha Vencimiento:</label>
+            <input type="date" id="fechaVencimientoReg" name="fechaVencimientoReg" class="form-control" />
+        </div>
+        <button type="button" id="submitProductoButton" class="btn btn-success">Guardar</button>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        $('#submitProductoButton').click(function () {
+            var nombre = $('#nombreReg').val();
+            var precio = $('#precioReg').val();
+            var fechaVencimiento = $('#fechaVencimientoReg').val();
+
+
+            $.ajax({
+                type: "POST",
+                url: "/Productos/SubmitForm",
+                data: {
+                    nombre: nombre,
+                    precio: precio,
+                    fechaVencimiento: fechaVencimiento
+                },
+                success: function (response) {
+                    // alert(response);
+                    console.log(response);
+                    $('#crearProductoModal').modal('hide');
+                    location.reload(); // Recargar la página para ver la lista actualizada
+                },
+                error: function () {
+                    alert('Hubo un error al crear el estudiante.');
+                }
+            });
+        });
+    });
+</script>
